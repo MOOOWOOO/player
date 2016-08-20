@@ -65,7 +65,7 @@ var play = function () {
         player._play();
     }
     log(self.data('mod'));
-    log('speed',player.playbackRate);
+    log('speed', player.playbackRate);
 };
 
 // 获取当前歌曲播放总时长
@@ -100,16 +100,26 @@ $('#id-player-next').on('click', function () {
 
 });
 
+$('#id-player-reset').on('click', function () {
+    player.playbackRate = 1;
+});
+
 // 减速
 $('#id-player-slowdown').on('click', function () {
-    var self = $(this);
-
+    if (player.playbackRate >= 0) {
+        player.playbackRate -= 0.1;
+    } else {
+        player.playbackRate = 0;
+    }
 });
 
 // 加速
 $('#id-player-speedup').on('click', function () {
-    var self = $(this);
-
+    if (player.playbackRate <= 4){
+    player.playbackRate += 0.1;
+    } else {
+        player.playbackRate = 4;
+    }
 });
 
 // 设置默认的播放模式, 这个是我们自己用的
@@ -162,6 +172,7 @@ $('#id-ul-song-list').on('click', 'a', function () {
 $('#id-audio-player').on('loadedmetadata', function () {
     log('loaded');
     player._play();
+    log('current Index',player.currentIndex);
 });
 
 // 给 id 为 id-audio-player 的元素也就是我们的 audio 标签添加一个事件 ended
