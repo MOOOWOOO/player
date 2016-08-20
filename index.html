@@ -14,8 +14,7 @@
 <div class="player">
     <!-- audio 就是我们的播放器, 加入 controls 属性是让浏览器生成一套默认的外观 -->
     <!-- 之后我们当然会生成自己的外观 -->
-    <audio id='id-audio-player' controls>
-    </audio>
+
     <button id="id-player-prev">Prev</button>
     <button id="id-player-play" data-mod="pause">Play/Pause</button>
     <button id="id-player-stop">Stop</button>
@@ -27,6 +26,12 @@
     &nbsp;/&nbsp;
     <label id="id-total-time">total time</label>
     <button id="id-player-mute" data-mod="unmute" data-vol="0">Mute</button>
+    <button id="id-player-speedup" data-mod="speed-up">Speed Up</button>
+    <button id="id-player-reset" data-mod="reset-speed">Reset Speed</button>
+    <button id="id-player-slowdown" data-mod="slow-down">Slow Down</button>
+    <br>
+    <audio id='id-audio-player' controls>
+    </audio>
 </div>
 <!-- ul 是用来放播放列表的 -->
 <ul id='id-ul-song-list'>

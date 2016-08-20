@@ -65,6 +65,7 @@ var play = function () {
         player._play();
     }
     log(self.data('mod'));
+    log('speed',player.playbackRate);
 };
 
 // 获取当前歌曲播放总时长
@@ -99,6 +100,18 @@ $('#id-player-next').on('click', function () {
 
 });
 
+// 减速
+$('#id-player-slowdown').on('click', function () {
+    var self = $(this);
+
+});
+
+// 加速
+$('#id-player-speedup').on('click', function () {
+    var self = $(this);
+
+});
+
 // 设置默认的播放模式, 这个是我们自己用的
 var playMode = 'loop';
 
@@ -108,9 +121,11 @@ var fs = require('fs');
 var path = require('path');
 
 var audioDir = path.join('player', 'audios');
-if (process.platform == 'darwin') {
-    audioDir = 'audios';
-}
+log('audioDir', audioDir);
+// if (process.platform == 'darwin') {
+//     audioDir = 'audios';
+// }
+log('audioDir', audioDir);
 // readdir 读取文件夹并以函数的形式返回所有文件
 // 我们的音乐都放在 audios 文件夹中
 fs.readdir(audioDir, function (error, files) {
@@ -141,6 +156,11 @@ $('#id-ul-song-list').on('click', 'a', function () {
     // 设置为 player 的当前音乐
     player.src = filepath;
     // 播放
+    // player._play();
+});
+
+$('#id-audio-player').on('loadedmetadata', function () {
+    log('loaded');
     player._play();
 });
 
