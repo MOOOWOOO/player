@@ -7,6 +7,7 @@
     <title>Gua Player</title>
     <!-- 这里引入一个 jquery 库, 引入方式和网页不一样 -->
     <script>window.$ = window.jQuery = require('./lib/jquery/jquery.js');</script>
+    <link rel="stylesheet" href="./css/player-main.css">
 </head>
 <body>
 <!-- 这是一个文本标题 -->
@@ -34,8 +35,9 @@
     </audio>
 </div>
 <!-- ul 是用来放播放列表的 -->
-<ul id='id-ul-song-list'>
-</ul>
+<span id="id-current-track" data-current-track="-1"></span>
+<ol id='id-ol-song-list'>
+</ol>
 </body>
 <script type="application/javascript" src="./js/player-main.js">
 //    require('./js/player-main');

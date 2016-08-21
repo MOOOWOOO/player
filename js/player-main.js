@@ -8,7 +8,8 @@ var log = function () {
 
 // 找到 audio 标签并赋值给 player
 var player = document.getElementById('id-audio-player');
-
+var current_track = $('#id-current-track');
+var playlist = [];
 var timer_refresh_current_time = null;
 
 // 定制播放动作
@@ -37,12 +38,10 @@ player._stop = function () {
 $('#id-player-mute').on('click', function () {
     var self = $(this);
     if (self.data('mod') == "unmute") {
-        log('do mute');
         self.data('mod', 'mute');
         self.data('vol', player.volume);
         player.volume = 0;
     } else {
-        log('do unmute');
         self.data('mod', 'unmute');
         var vol = 0;
         if (self.data('vol') == 0) {
@@ -52,8 +51,6 @@ $('#id-player-mute').on('click', function () {
         }
         player.volume = vol;
     }
-    log(self.data('mod'));
-    log(player.volume);
 });
 
 // 播放、暂停动作
@@ -64,15 +61,12 @@ var play = function () {
     } else {
         player._play();
     }
-    log(self.data('mod'));
-    log('speed', player.playbackRate);
 };
 
 // 获取当前歌曲播放总时长
 var total_time = function () {
     var t_time = player.duration;
     $('#id-total-time').text(t_time.toString());
-    log('total_time', player.duration);
 };
 
 // 获取当前播放时间
@@ -92,14 +86,25 @@ $('#id-player-stop').on('click', function () {
 
 // 上一首
 $('#id-player-prev').on('click', function () {
-
+    var prev_track = current_track.data('current-track') - 1;
+    if (prev_track == -1){
+        prev_track = playlist.length -1;
+    } else {
+    }
+    $('#id-ol-song-list').find('li').eq(prev_track).click();
 });
 
 // 下一首
 $('#id-player-next').on('click', function () {
-
+    var next_track = current_track.data('current-track') + 1;
+    if (next_track >= playlist.length) {
+        next_track = 0;
+    } else {
+    }
+    $('#id-ol-song-list').find('li').eq(next_track).click();
 });
 
+// 默认速度
 $('#id-player-reset').on('click', function () {
     player.playbackRate = 1;
 });
@@ -131,48 +136,35 @@ var fs = require('fs');
 var path = require('path');
 
 var audioDir = path.join('player', 'audios');
-log('audioDir', audioDir);
-// if (process.platform == 'darwin') {
-//     audioDir = 'audios';
-// }
-log('audioDir', audioDir);
 // readdir 读取文件夹并以函数的形式返回所有文件
 // 我们的音乐都放在 audios 文件夹中
 fs.readdir(audioDir, function (error, files) {
-    log(files, files.length);
     // 这是一个套路, 简而言之就是生成一段字符串
+    var num = 0;
     var songTemplate = function (song) {
-        var t = `
-              <li class="gua-song">
-                    <a href="#">${song}</a>
-                </li>
-            `;
+        var t =`<li class="gua-song" data-track-num="${num}" data-track-name="${song}">${song}</li>`;
+        num += 1;
         return t;
     };
     // 生成播放列表
     // map 是对 files 里面的每个元素调用 songTemplate 并且用结果生成一个新列表
-    var songs = files.map(songTemplate);
-    // 找到 id 为 id-ul-song-list 的元素并把上面生成的列表添加进去
-    $('#id-ul-song-list').append(songs);
+    playlist = files.map(songTemplate);
+    // 找到 id 为 id-ol-song-list 的元素并把上面生成的列表添加进去
+    $('#id-ol-song-list').append(playlist);
 });
 
-// 给 id 为 id-ul-song-list 的元素下的 a 标签添加一个点击事件
-$('#id-ul-song-list').on('click', 'a', function () {
-    // self 是被点击的 a 标签, 套路
+$('#id-ol-song-list').on('click', 'li', function () {
     var self = $(this);
     // 生成音乐文件的路径
-    var filepath = path.join('audios', self.text());
+    var filepath = path.join('audios', self.data('track-name'));
     // var filepath = 'audios/' + self.text()
     // 设置为 player 的当前音乐
     player.src = filepath;
-    // 播放
-    // player._play();
+    current_track.data('current-track', self.data('track-num'));
 });
 
 $('#id-audio-player').on('loadedmetadata', function () {
-    log('loaded');
     player._play();
-    log('current Index',player.currentIndex);
 });
 
 // 给 id 为 id-audio-player 的元素也就是我们的 audio 标签添加一个事件 ended
