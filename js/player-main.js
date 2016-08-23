@@ -15,34 +15,66 @@ var playMode = 'loop';
 
 // 页面组件相关
 {
-    var init_slider = function () {
+    var init_volume_slider = function (current_volume) {
+        $("#id-div-volume-slider").slider({
+            range: "min",
+            min: 0,
+            max: 1,
+            step: 0.01,
+            value: current_volume,
+            change: function (event, ui) {
+                player.volume = ui.value;
+            },
+            slide: function (event, ui) {
+                player.volume = ui.value;
+            },
+        })
+    };
+
+    var control_volume_slider = function (current_volume) {
+        $("#id-div-volume-slider").slider({value: current_volume});
+    };
+
+    var init_playing_slider = function (track_length) {
         $("#id-div-playing-process").slider({
             min: 0,
             max: track_length,
             range: "min",
             step: 0.01,
-            value: playing_process + 0.01,
+            value: playing_process,
+            change: function (event, ui) {
+                player.currentTime = ui.value;
+            },
             slide: function (event, ui) {
-                playing_process = ui.value;
+                player.currentTime = ui.value;
             }
         });
     };
-    var destroy_slider = function () {
-        $("#id-div-playing-process").slider("destroy");
+
+    var control_playing_slider = function (current_time) {
+        $("#id-div-playing-process").slider({value: current_time});
     };
 
+    var destroy_slider = function () {
+        $("#id-div-playing-process").slider("destroy");
+        $("#id-div-volume-slider").slider("destroy");
+    };
 
 }
 
-init_slider();
+init_playing_slider(0);
+init_volume_slider(1);
 
 // 定制播放器行为
 {
     // 定制播放动作
     player._play = function () {
-        player.play();
         $('#id-player-play').data('mod', 'play');
         total_time();
+        destroy_slider();
+        init_playing_slider(track_length);
+        init_volume_slider(player.volume);
+        player.play();
         timer_refresh_current_time = setInterval(current_time, 1000);
     };
 
@@ -64,13 +96,15 @@ init_slider();
 // 获取当前歌曲播放总时长
 var total_time = function () {
     track_length = player.duration;
-    $('#id-total-time').text(track_length);
+    $('#id-span-total-time').text(track_length);
 };
 
 // 获取当前播放时间
 var current_time = function () {
     playing_process = player.currentTime;
-    $('#id-current-time').text(playing_process);
+    log(playing_process);
+    $('#id-span-current-time').text(playing_process);
+    control_playing_slider(playing_process);
 };
 
 // 播放歌曲操作
@@ -97,6 +131,7 @@ var current_time = function () {
 
     // 上一首
     $('#id-player-prev').on('click', function () {
+        log('prev');
         var prev_track = current_track.data('current-track') - 1;
         if (prev_track == -1) {
             prev_track = playlist.length - 1;
@@ -107,6 +142,7 @@ var current_time = function () {
 
     // 下一首
     $('#id-player-next').on('click', function () {
+        log('next');
         var next_track = current_track.data('current-track') + 1;
         if (next_track >= playlist.length) {
             next_track = 0;
@@ -139,12 +175,12 @@ var current_time = function () {
     });
 
     // 静音功能
-    $('#id-player-mute').on('click', function () {
+    $('#id-span-player-mute').on('click', function () {
         var self = $(this);
         if (self.data('mod') == "unmute") {
             self.data('mod', 'mute');
             self.data('vol', player.volume);
-            player.volume = 0;
+            control_volume_slider(0);
         } else {
             self.data('mod', 'unmute');
             var vol = 0;
@@ -153,7 +189,7 @@ var current_time = function () {
             } else {
                 vol = self.data('vol');
             }
-            player.volume = vol;
+            control_volume_slider(vol);
         }
     });
 

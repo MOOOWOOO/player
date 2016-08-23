@@ -1,68 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <!-- 注意 electron 不是网页 所以有的东西和网页不一样 -->
     <meta charset="UTF-8">
-    <!-- title 是软件的标题 -->
-    <title>Gua Player</title>
-    <!-- 这里引入一个 jquery 库, 引入方式和网页不一样 -->
+    <title>Title</title>
     <script>window.$ = window.jQuery = require('./lib/jquery/jquery.js');</script>
     <script src="./lib/jquery-ui/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./lib/jquery-ui/jquery-ui.min.css">
 </head>
 <body>
-<!-- 这是一个文本标题 -->
-<h1>Gua Player</h1>
-<div class="player">
-    <!-- audio 就是我们的播放器, 加入 controls 属性是让浏览器生成一套默认的外观 -->
-    <!-- 之后我们当然会生成自己的外观 -->
+<div style="height: 1em;"></div>
+<div class="container col-xs-12" id="id-div-panel-body">
     <div class="row" id="id-div-playing-process-holder">
-        <div class="col-lg-6 col-md-6 col-sm-8 col-xs-8 col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-xs-offset-2"
-             id="id-div-playing-process">
+        <div class="col-xs-6 col-xs-offset-3">
+            <audio id='id-audio-player' controls></audio>
+            <span id="id-current-track" data-current-track="-1"></span>
+            <div class="" id="id-div-playing-process"></div>
         </div>
     </div>
     <div class="row" id="id-div-time-info">
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" id="id-current-time">current time</div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 col-lg-offset-10 col-md-offset-10 col-sm-offset-10 col-xs-offset-10"
-             id="id-total-time">total time
+        <div class="col-xs-1 col-xs-offset-3">
+            <p class="text-left">
+                <span id="id-span-current-time">
+                    CurrentTime
+                </span>
+            </p>
+        </div>
+        <div class="col-xs-1 col-xs-offset-4">
+            <p class="text-right">
+                <span id="id-span-total-time">
+                    TotalTime
+                </span>
+            </p>
         </div>
     </div>
     <div class="row" id="id-div-track-info">
-        <div class="col-lg-6 col-md-6 col-sm-8 col-xs-8 col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-xs-offset-2"
-             id="id-div-track-name">track-name
-        </div>
+        <p class="text-center">
+            <span id="id-span-track-name">TrackName</span>
+        </p>
     </div>
     <div class="row" id="id-div-record-info">
-        <i class="" id="id-div-record-name">record-name</i>
-        <i class="">&nbsp;-&nbsp;</i>
-        <i class="" id="id-div-singer-name">singer-name</i>
+        <p class="text-center">
+            <span id="id-span-record-name">RecordName</span>
+            &nbsp;-&nbsp;
+            <span id="id-span-singer-name">SingerName</span>
+        </p>
     </div>
     <div class="row" id="id-div-playing-control">
-        <div class="" id="id-player-prev">Prev</div>
-        <div class="" id="id-player-play" data-mod="pause">Play/Pause</div>
-        <div class="" id="id-player-stop">Stop</div>
-        <div class="" id="id-player-next">Next</div>
+        <div class="col-xs-1 col-xs-offset-4">
+            <p class="text-center">
+                <span id="id-player-prev">prev</span>
+            </p>
+        </div>
+        <div class="col-xs-1" data-mod="pause">
+            <p class="text-center">
+                <span id="id-player-play" data-mod="pause">Play</span>
+            </p>
+        </div>
+        <div class="col-xs-1">
+            <p class="text-center">
+                <span id="id-player-stop">Stop</span>
+            </p>
+        </div>
+        <div class="col-xs-1">
+            <p class="text-center">
+                <span id="id-player-next">next</span>
+            </p>
+        </div>
     </div>
-    <div class="row" id="id-div-player-control">
-        <div class="" id="id-div-track-collect">Collect</div>
-        <div class="" id="id-div-loop-mod" data-mod="loop">Loop</div>
-        <div class="" id="id-div-repet-mod" data-mod="single">Repet</div>
-        <div class="" id="id-div-more">more</div>
+    <div class="row">
+        <div class="col-xs-1 col-xs-offset-4">
+            <p class="text-center">
+
+                <span id="id-span-track-collect">Collect</span>
+            </p>
+        </div>
+        <div class="col-xs-1">
+            <p class="text-center">
+                <span id="id-span-loop-mod" data-mod="loop">Loop</span>
+            </p>
+        </div>
+        <div class="col-xs-1">
+            <p class="text-center">
+                <span id="id-span-div-repet-mod" data-mod="single">Repet</span>
+            </p>
+        </div>
+        <div class="col-xs-1">
+            <p class="text-center">
+                <span id="id-span-more">More</span>
+            </p>
+        </div>
     </div>
-    <div class="" id="id-player-mute" data-mod="unmute" data-vol="0">Mute</div>
-    <div class="" id="id-div-volume"></div>
-    <div class="" id="id-player-speedup" data-mod="speed-up">Speed Up</div>
-    <div class="" id="id-player-reset" data-mod="reset-speed">Reset Speed</div>
-    <div class="" id="id-player-slowdown" data-mod="slow-down">Slow Down</div>
-    <br>
-    <audio id='id-audio-player'>
-    </audio>
 </div>
-<!-- ul 是用来放播放列表的 -->
-<span id="id-current-track" data-current-track="-1"></span>
-<ol id='id-ol-song-list'>
-</ol>
+<div class="row" id="id-div-other-control">
+    <div class="col-xs-3 col-xs-offset-3">
+        <span class="" id="id-span-player-mute" data-mod="unmute" data-vol="0">Mute</span>
+        <div class="" id="id-div-volume-slider"></div>
+    </div>
+    <div class="col-xs-1" id="id-player-speedup" data-mod="speed-up">Speed Up</div>
+    <div class="col-xs-1" id="id-player-reset" data-mod="reset-speed">Reset Speed</div>
+    <div class="col-xs-1" id="id-player-slowdown" data-mod="slow-down">Slow Down</div>
+</div>
+<div class="container col-xs-12">
+    <div class="col-xs-4 col-xs-offset-2">
+        <ol class="text-right" id='id-ol-song-list'>
+        </ol>
+    </div>
+    <div class="col-xs-4">
+        <p>lrc</p>
+    </div>
+</div>
 </body>
-<script type="text/javascript" src="./js/player-main.js"></script>
+<script src="./js/player-main.js"></script>
 </html>
