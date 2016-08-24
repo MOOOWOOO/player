@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script>window.$ = window.jQuery = require('./lib/jquery/jquery.js');</script>
-    <script src="./lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="lib/jquery-ui/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./lib/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="./css/player-main.css">
 </head>
 <body>
 <div style="height: 1em;"></div>
@@ -21,9 +22,9 @@
     <div class="row" id="id-div-time-info">
         <div class="col-xs-1 col-xs-offset-3">
             <p class="text-left">
-                <span id="id-span-current-time">
+                <label id="id-label-current-time">
                     CurrentTime
-                </span>
+                </label>
             </p>
         </div>
         <div class="col-xs-1 col-xs-offset-4">
@@ -36,74 +37,91 @@
     </div>
     <div class="row" id="id-div-track-info">
         <p class="text-center">
-            <span id="id-span-track-name">TrackName</span>
+            <label id="id-label-track-name">TrackName</label>
         </p>
     </div>
     <div class="row" id="id-div-record-info">
         <p class="text-center">
-            <span id="id-span-record-name">RecordName</span>
+            <label id="id-label-record-name">RecordName</label>
             &nbsp;-&nbsp;
-            <span id="id-span-singer-name">SingerName</span>
+            <label id="id-label-singer-name">SingerName</label>
         </p>
     </div>
     <div class="row" id="id-div-playing-control">
         <div class="col-xs-1 col-xs-offset-4">
-            <p class="text-center">
-                <span id="id-player-prev">prev</span>
+            <p class="text-center ui-button ui-corner-all ui-widget">
+                <span id="id-player-prev" class="ui-icon ui-icon-seek-first">Prev</span>
             </p>
         </div>
         <div class="col-xs-1" data-mod="pause">
-            <p class="text-center">
-                <span id="id-player-play" data-mod="pause">Play</span>
+            <p id="id-player-play" class="text-center ui-button ui-corner-all ui-widget" data-mod="pause">
+                <span class="ui-icon ui-icon-play">Play/Pause</span>
             </p>
         </div>
         <div class="col-xs-1">
-            <p class="text-center">
-                <span id="id-player-stop">Stop</span>
+            <p id="id-player-stop" class="text-center ui-button ui-corner-all ui-widget">
+                <span class="ui-icon ui-icon-stop">Stop</span>
             </p>
         </div>
         <div class="col-xs-1">
-            <p class="text-center">
-                <span id="id-player-next">next</span>
+            <p id="id-player-next" class="text-center ui-button ui-corner-all ui-widget">
+                <span class="ui-icon ui-icon-seek-end">Next</span>
             </p>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-1 col-xs-offset-4">
-            <p class="text-center">
-
-                <span id="id-span-track-collect">Collect</span>
+            <p id="id-p-track-collect" class="text-center ui-button ui-corner-all ui-widget">
+                <span class="ui-icon ui-icon-heart">Collect</span>
             </p>
         </div>
         <div class="col-xs-1">
-            <p class="text-center">
-                <span id="id-span-loop-mod" data-mod="loop">Loop</span>
+            <p id="id-p-loop-mod" class="text-center ui-button ui-corner-all ui-widget" data-mod="loop">
+                <span class="ui-icon ui-icon-refresh">Loop</span>
+                <!--ui-icon ui-icon-shuffle 随机-->
+                <!--ui-icon ui-icon-arrowrefresh-1-e 单曲-->
             </p>
         </div>
         <div class="col-xs-1">
-            <p class="text-center">
-                <span id="id-span-div-repet-mod" data-mod="single">Repet</span>
+            <p id="id-p-div-repeat-mod" class="text-center ui-button ui-corner-all ui-widget" data-mod="single">
+                <span class="ui-icon ui-icon-transferthick-e-w">Repeat</span>
             </p>
         </div>
         <div class="col-xs-1">
-            <p class="text-center">
-                <span id="id-span-more">More</span>
+            <p id="id-p-more" class="text-center ui-button ui-corner-all ui-widget">
+                <span class="ui-icon ui-icon-grip-dotted-horizontal">More</span>
             </p>
         </div>
     </div>
 </div>
 <div class="row" id="id-div-other-control">
     <div class="col-xs-3 col-xs-offset-3">
-        <span class="" id="id-span-player-mute" data-mod="unmute" data-vol="0">Mute</span>
-        <div class="" id="id-div-volume-slider"></div>
+        <div class="col-xs-3">
+            <p id="id-p-player-mute" class="text-center ui-button ui-corner-all ui-widget" data-mod="unmute" data-vol="0">
+                <span class="ui-icon ui-icon-volume-off">Mute</span>
+            </p>
+        </div>
+        <div class="col-xs-9" id="id-div-volume-slider"></div>
     </div>
-    <div class="col-xs-1" id="id-player-speedup" data-mod="speed-up">Speed Up</div>
-    <div class="col-xs-1" id="id-player-reset" data-mod="reset-speed">Reset Speed</div>
-    <div class="col-xs-1" id="id-player-slowdown" data-mod="slow-down">Slow Down</div>
+    <div class="col-xs-1" data-mod="slow-down">
+        <p id="id-p-speed-down" class="text-center ui-button ui-corner-all ui-widget">
+            <span class="ui-icon ui-icon-seek-prev">Slow Down</span>
+        </p>
+    </div>
+    <div class="col-xs-1" data-mod="reset-speed">
+        <p id="id-p-reset-speed" class="text-center ui-button ui-corner-all ui-widget">
+            <span class="ui-icon ui-icon-arrowrefresh-1-s">Reset Speed</span>
+        </p>
+    </div>
+    <div class="col-xs-1" data-mod="speed-up">
+        <p id="id-p-speed-up" class="text-center ui-button ui-corner-all ui-widget">
+            <span class="ui-icon ui-icon-seek-next">Speed Up</span>
+        </p>
+    </div>
 </div>
 <div class="container col-xs-12">
     <div class="col-xs-4 col-xs-offset-2">
-        <ol class="text-right" id='id-ol-song-list'>
+        <ol class="text-right ui-menu ui-widget ui-widget-content" id='id-ol-song-list'>
         </ol>
     </div>
     <div class="col-xs-4">

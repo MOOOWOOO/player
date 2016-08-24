@@ -114,8 +114,12 @@ var current_time = function () {
         var self = $('#id-player-play');
         if (self.data('mod') == 'play') {
             player._pause();
+            self.css();
+            //ui-icon ui-icon-pause
         } else {
             player._play();
+            self.css();
+            //ui-icon ui-icon-play
         }
     };
 
@@ -152,35 +156,40 @@ var current_time = function () {
     });
 
     // 默认速度
-    $('#id-player-reset').on('click', function () {
+    $('#id-p-reset-speed').on('click', function () {
         player.playbackRate = 1;
     });
 
     // 减速
-    $('#id-player-slowdown').on('click', function () {
+    $('#id-p-speed-down').on('click', function () {
         if (player.playbackRate >= 0) {
             player.playbackRate -= 0.1;
+            // enable
         } else {
             player.playbackRate = 0;
+            // disable
         }
     });
 
     // 加速
-    $('#id-player-speedup').on('click', function () {
+    $('#id-p-speed-up').on('click', function () {
         if (player.playbackRate <= 4) {
             player.playbackRate += 0.1;
+            // enable
         } else {
             player.playbackRate = 4;
+            // disable
         }
     });
 
     // 静音功能
-    $('#id-span-player-mute').on('click', function () {
+    $('#id-p-player-mute').on('click', function () {
         var self = $(this);
         if (self.data('mod') == "unmute") {
             self.data('mod', 'mute');
             self.data('vol', player.volume);
             control_volume_slider(0);
+            // class add mute ui-icon ui-icon-volume-off
         } else {
             self.data('mod', 'unmute');
             var vol = 0;
@@ -190,6 +199,7 @@ var current_time = function () {
                 vol = self.data('vol');
             }
             control_volume_slider(vol);
+            // class add unmute ui-icon ui-icon-volume-on
         }
     });
 
@@ -205,7 +215,7 @@ var current_time = function () {
     fs.readdir(audioDir, function (error, files) {
         var num = 0;
         var songTemplate = function (song) {
-            var t = `<li class="gua-song" data-track-num="${num}" data-track-name="${song}">${song}</li>`;
+            var t = `<li class="ui-menu-item" data-track-num="${num}" data-track-name="${song}">${song}</li>`;
             num += 1;
             return t;
         };
