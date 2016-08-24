@@ -1,11 +1,12 @@
 {
-  "name"    : "player",
-  "version" : "1.0.0",
-  "main"    : "main.js",
+  "name": "player",
+  "version": "1.0.0",
+  "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
   "dependencies": {
-    "electron": "latest"
+    "electron": "latest",
+    "jsmediatags": "^3.2.1"
   }
 }

@@ -7,11 +7,10 @@
     <script src="lib/jquery-ui/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./lib/jquery-ui/jquery-ui.min.css">
-    <link rel="stylesheet" href="./css/player-main.css">
 </head>
 <body>
 <div style="height: 1em;"></div>
-<div class="container col-xs-12" id="id-div-panel-body">
+<div class="container col-xs-10 col-xs-offset-1" id="id-div-panel-body">
     <div class="row" id="id-div-playing-process-holder">
         <div class="col-xs-6 col-xs-offset-3">
             <audio id='id-audio-player'></audio>
@@ -23,34 +22,34 @@
         <div class="col-xs-1 col-xs-offset-3">
             <p class="text-left">
                 <label id="id-label-current-time">
-                    CurrentTime
+                    --:--
                 </label>
             </p>
         </div>
         <div class="col-xs-1 col-xs-offset-4">
             <p class="text-right">
-                <span id="id-span-total-time">
-                    TotalTime
-                </span>
+                <label id="id-label-total-time">
+                    --:--
+                </label>
             </p>
         </div>
     </div>
     <div class="row" id="id-div-track-info">
         <p class="text-center">
-            <label id="id-label-track-name">TrackName</label>
+            <label id="id-label-title">TrackName</label>
         </p>
     </div>
     <div class="row" id="id-div-record-info">
         <p class="text-center">
-            <label id="id-label-record-name">RecordName</label>
+            <label id="id-label-album">RecordName</label>
             &nbsp;-&nbsp;
-            <label id="id-label-singer-name">SingerName</label>
+            <label id="id-label-artist">SingerName</label>
         </p>
     </div>
     <div class="row" id="id-div-playing-control">
         <div class="col-xs-1 col-xs-offset-4">
-            <p class="text-center ui-button ui-corner-all ui-widget">
-                <span id="id-player-prev" class="ui-icon ui-icon-seek-first">Prev</span>
+            <p id="id-player-prev" class="text-center ui-button ui-corner-all ui-widget">
+                <span class="ui-icon ui-icon-seek-first">Prev</span>
             </p>
         </div>
         <div class="col-xs-1" data-mod="pause">
@@ -95,9 +94,10 @@
     </div>
 </div>
 <div class="row" id="id-div-other-control">
-    <div class="col-xs-3 col-xs-offset-3">
+    <div class="col-xs-1 col-xs-offset-4">
         <div class="col-xs-3">
-            <p id="id-p-player-mute" class="text-center ui-button ui-corner-all ui-widget" data-mod="unmute" data-vol="0">
+            <p id="id-p-player-mute" class="text-center ui-button ui-corner-all ui-widget" data-mod="unmute"
+               data-vol="0">
                 <span class="ui-icon ui-icon-volume-off">Mute</span>
             </p>
         </div>
@@ -119,14 +119,9 @@
         </p>
     </div>
 </div>
-<div class="container col-xs-12">
-    <div class="col-xs-4 col-xs-offset-2">
-        <ol class="text-right ui-menu ui-widget ui-widget-content" id='id-ol-song-list'>
-        </ol>
-    </div>
-    <div class="col-xs-4">
-        <p>lrc</p>
-    </div>
+<div class="container col-xs-6 col-xs-offset-3">
+    <ol class="text-right ui-menu ui-widget ui-widget-content" id='id-ol-song-list'>
+    </ol>
 </div>
 </body>
 <script src="./js/player-main.js"></script>

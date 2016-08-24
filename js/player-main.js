@@ -1,9 +1,42 @@
-var log = function () {
-    // js 中函数里的 arguments 是一个保存了所有参数的列表
-    // 就是这么野鸡
-    // 输出用 console.log
-    console.log(arguments)
-};
+// utils
+{
+    var formatSeconds = function (value) {
+        var theTime = parseInt(value);// 秒
+        var theTime1 = 0;// 分
+        var theTime2 = 0;// 小时
+
+        if (theTime > 60) {
+            theTime1 = parseInt(theTime / 60);
+            theTime = parseInt(theTime % 60);
+
+            if (theTime1 > 60) {
+                theTime2 = parseInt(theTime1 / 60);
+                theTime1 = parseInt(theTime1 % 60);
+            }
+        }
+
+        var s = parseInt(theTime);
+
+        var m = 0;
+        if (theTime1 > 0) {
+            m = parseInt(theTime1);
+        }
+
+        var h = 0;
+        if (theTime2 > 0) {
+            h = parseInt(theTime2);
+        }
+        return h + ':' + m + ':' + s;
+    };
+
+    var log = function () {
+        // js 中函数里的 arguments 是一个保存了所有参数的列表
+        // 就是这么野鸡
+        // 输出用 console.log
+        console.log(arguments)
+    };
+
+}
 
 var player = document.getElementById('id-audio-player');
 var current_track = $('#id-current-track');
@@ -36,6 +69,7 @@ var playMode = 'loop';
     };
 
     var init_playing_slider = function (track_length) {
+        log(playing_process);
         $("#id-div-playing-process").slider({
             min: 0,
             max: track_length,
@@ -51,8 +85,8 @@ var playMode = 'loop';
         });
     };
 
-    var control_playing_slider = function (current_time) {
-        $("#id-div-playing-process").slider({value: current_time});
+    var control_playing_slider = function (current_process) {
+        $("#id-div-playing-process").slider({value: current_process});
     };
 
     var destroy_slider = function () {
@@ -96,14 +130,13 @@ init_volume_slider(1);
 // 获取当前歌曲播放总时长
 var total_time = function () {
     track_length = player.duration;
-    $('#id-span-total-time').text(track_length);
+    $('#id-label-total-time').text(formatSeconds(track_length));
 };
 
 // 获取当前播放时间
 var current_time = function () {
     playing_process = player.currentTime;
-    log(playing_process);
-    $('#id-span-current-time').text(playing_process);
+    $('#id-label-current-time').text(formatSeconds(playing_process));
     control_playing_slider(playing_process);
 };
 
@@ -232,6 +265,7 @@ var current_time = function () {
         var filepath = path.join('audios', self.data('track-name'));
         // 设置为 player 的当前音乐
         player.src = filepath;
+        audio_info(player.src);
         current_track.data('current-track', self.data('track-num'));
     });
 
@@ -253,3 +287,39 @@ var current_time = function () {
     });
 }
 
+// read music file info
+{
+    var jsmediatags = require("jsmediatags");
+
+    var audio_info = function (audio_file_path) {
+        new jsmediatags.Reader(audio_file_path)
+            .setTagsToRead(["title", "artist", "album"])
+            .read({
+                onSuccess: function (tag) {
+                    var artist = tag.tags.artist;
+                    if (artist) {
+                    } else {
+                        artist = 'default';
+                    }
+                    var album = tag.tags.album;
+                    if (album) {
+                    } else {
+                        album = 'default';
+                    }
+                    var title = tag.tags.title;
+                    if (title) {
+                    } else {
+                        var fn = audio_file_path.split('/');
+                        title = fn[fn.length - 1];
+                    }
+                    $("#id-label-artist").text(artist);
+                    $("#id-label-album").text(album);
+                    $("#id-label-title").text(title);
+                },
+                onError: function (error) {
+                    console.log(':(', error.type, error.info);
+                }
+            });
+    }
+
+}

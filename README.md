@@ -13,6 +13,6 @@ electron music player
 7. ~~volume control~~
 8. fast forward / fast backward
 9. A-B repeat mode
-10. get track infos (track name, record name, singer name)
+10. ~~get track infos (track name, record name, singer name)~~
 11. loop mode (none, random, order)
-12. pretty skin
+12. ~~pretty skin~~(not quite pretty)
